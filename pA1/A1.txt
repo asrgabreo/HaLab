@@ -1,0 +1,215 @@
+//activity life cycle
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    tools:context=".MainActivity"
+    tools:visibility="visible">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="324dp"
+        android:layout_height="126dp"
+        android:text="@string/lifecycle"
+        android:textSize="80sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.632"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.611" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="146dp"
+        android:layout_height="58dp"
+        android:text="Change Image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.811" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="242dp"
+        android:layout_height="271dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.123"
+        tools:srcCompat="@drawable/ic_launcher_background" />
+</android.support.constraint.ConstraintLayout>
+
+
+package com.example.app1;
+
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ImageView img = findViewById(R.id.imageView);
+        Button button1 = findViewById(R.id.button);
+        final boolean[] ch = {false};
+        img.setImageResource(R.drawable.ic_launcher_foreground);
+        Toast.makeText(getApplicationContext(), "OnCreate was called", Toast.LENGTH_SHORT).show();
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(ch[0] ==false){
+                    img.setImageResource(R.drawable.ic_launcher_background);
+                    ch[0] =true;
+                }else{
+                    img.setImageResource(R.drawable.ic_launcher_foreground);
+                    ch[0] =false;
+                }
+            }
+        });
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(getApplicationContext(), "OnRestart was called", Toast.LENGTH_SHORT).show();
+    }
+    protected void onStart(){
+        super.onStart();
+        Toast.makeText(getApplicationContext(), "OnStart was called", Toast.LENGTH_SHORT).show();
+    }
+
+    protected void onStop(){
+        super.onStop();
+        Toast.makeText(getApplicationContext(), "OnStop was called", Toast.LENGTH_SHORT).show();
+
+    }
+    protected void onResume(){
+        super.onResume();
+        Toast.makeText(getApplicationContext(), "OnResume was called", Toast.LENGTH_SHORT).show();
+
+    }
+    protected void onPause(){
+        super.onPause();
+        Toast.makeText(getApplicationContext(), "OnPause was called", Toast.LENGTH_SHORT).show();
+    }
+
+    protected void onDestroy(){
+        super.onDestroy();
+        Toast.makeText(getApplicationContext(), "OnDestroy was called", Toast.LENGTH_SHORT).show();
+    }
+}
+
+
+
+//listview
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
+
+
+<resources>
+    <string name="app_name">listView</string>
+    <string-array name="country">
+        <item>India</item>
+        <item>China</item>
+        <item>Pakistan</item>
+        <item>Bangladesh</item>
+        <item>SriLanka</item>
+        <item>Nepal</item>
+    </string-array>
+</resources>
+
+
+package com.example.listview;
+
+import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+    ListView myList;
+    String[] countryList;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        myList=findViewById(R.id.list);
+        countryList=getResources().getStringArray(R.array.country);
+        ArrayAdapter arrayAdapter=new ArrayAdapter(this, android.R.layout.simple_list_item_1,countryList);
+        myList.setAdapter(arrayAdapter);
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(MainActivity.this,"You have clicked : "+adapterView.getItemAtPosition(i),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+}
+
+
+//webview
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <WebView
+        android:id="@+id/webV"
+        android:layout_width="371dp"
+        android:layout_height="581dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+//add this line in manifest.xml
+<uses-permission android:name="android.permission.INTERNET"/>
+
+package com.example.webview;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.webkit.WebView;
+
+public class MainActivity extends AppCompatActivity {
+    WebView webView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        webView=findViewById(R.id.webV);
+        webView.loadUrl("https://en.wikipedia.org/wiki/Nitte_Meenakshi_Institute_of_Technology");
+    }
+}
